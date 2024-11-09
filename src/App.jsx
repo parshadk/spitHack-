@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import {
   createBrowserRouter,
@@ -6,8 +8,7 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
-import  ItemPage from './pages/ItemPage';
-import Support from './pages/Support';
+import  ItemPage from './pages/Itempage';
 import Dashboard from './pages/Dashboard';
 import Achievements from './pages/Achievements';
 import Settings from './pages/Settings';
@@ -17,11 +18,11 @@ import Chatbot from './pages/Chatbot';
 import Documentation from './pages/Documentation';
 import About from './pages/About';
 import Account from './pages/Account';
-
+import Help from './pages/Help';
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
-  { path: '/items',element:<ItemPage/>},
-  { path: '/support', element: <Support /> },
+  { path: '/items', element: <ItemPage /> },
+  { path: '/help', element: <Help /> },
   { path: '/dashboard', element: <Dashboard /> },
   { path: '/achievements', element: <Achievements /> },
   { path: '/settings', element: <Settings /> },

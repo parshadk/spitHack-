@@ -67,25 +67,25 @@ const data = {
       title: "Documentation",
       url: "/docs",
       icon: BookOpen,
-     
+
     },
     {
       title: "About",
       url: "/about",
       icon: Info,
-     
+
     },
     {
       title: "Settings",
       url: "/settings",
       icon: Settings2,
-     
+
     },
   ],
   navSecondary: [
     {
-      title: "Support & Feedback",
-      url: "/support",
+      title: "Help & Feedback",
+      url: "/help",
       icon: LifeBuoy,
     },
 
@@ -107,7 +107,7 @@ export function AppSidebar(props) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <a href="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Command className="size-4" />
                 </div>

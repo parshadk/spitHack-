@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -27,15 +28,11 @@ import {
     SidebarTrigger,
   } from "@/components/ui/sidebar"
   import { AppSidebar } from "@/components/ui/app-sidebar"
+ 
 
 
-
-  const teamMembers = [
-    { name: 'John Doe', role: 'Customer Support', email: 'john@foodflux.com', image: '/placeholder.svg?height=100&width=100' },
-    { name: 'Jane Smith', role: 'Technical Support', email: 'jane@foodflux.com', image: '/placeholder.svg?height=100&width=100' },
-    { name: 'Mike Johnson', role: 'Product Specialist', email: 'mike@foodflux.com', image: '/placeholder.svg?height=100&width=100' },
-    { name: 'Sarah Brown', role: 'Account Manager', email: 'sarah@foodflux.com', image: '/placeholder.svg?height=100&width=100' },
-    { name: 'Alex Lee', role: 'Operations Manager', email: 'alex@foodflux.com', image: '/placeholder.svg?height=100&width=100' },
+const teamMembers = [
+    
 ]
 
 const faqs = [
@@ -60,8 +57,8 @@ const faqs = [
         answer: '"Fresh" means the item is not close to expiry. "Expiring Soon" appears when an item is within 3 days of its expiry date. "Expired" shows for items past their expiry date.'
     },
 ]
-function Support() {
 
+export default function Help() {
     const [user, setUser] = useState({
         name: 'John Doe',
         username: 'johndoe',
@@ -77,29 +74,31 @@ function Support() {
         alert('Your complaint has been submitted. We\'ll get back to you soon.')
     }
 
-  return (
-    <SidebarProvider>
-    <AppSidebar />
-    <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <div className="flex items-center gap-2 px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="/support">
-                 Support
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </header>
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="container mx-auto px-4 py-8">
+    return (
+        <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">
+                      Building Your Application
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="container mx-auto px-4 py-8">
             <header className="flex items-center space-x-4 mb-8">
                 <Avatar className="h-12 w-12">
                     <AvatarImage src={user.avatarUrl} alt={user.name} />
@@ -194,11 +193,10 @@ function Support() {
                 </section>
             </main>
         </div>
-      </div>
-    </SidebarInset>
-  </SidebarProvider>
-
-  )
+            
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+  
+    )
 }
-
-export default Support
