@@ -47,16 +47,16 @@ export function NavProjects({ projects }) {
               >
                 <DropdownMenuItem>
                   <Folder className="text-muted-foreground" />
-                  <span>View Project</span>
+                  <span>View </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Share className="text-muted-foreground" />
-                  <span>Share Project</span>
+                  <span>Share </span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <Trash2 className="text-muted-foreground" />
-                  <span>Delete Project</span>
+                  <span>Delete </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

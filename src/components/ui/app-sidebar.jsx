@@ -6,12 +6,14 @@ import {
   Command,
   Frame,
   LifeBuoy,
-  Map,
+  Users,
   PieChart,
   Send,
+  Award,
   Settings2,
-  SquareTerminal,
+  LayoutDashboard,
   Info,
+  CircleDollarSign,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -38,39 +40,55 @@ const data = {
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: SquareTerminal
+      icon: LayoutDashboard
      
     },
     {
+      title: "NGO Donations",
+      url: "/donations",
+      icon: CircleDollarSign,
+    },
+    {
+      title: "Crowd Funding",
+      url: "/crowdfunding",
+      icon: Users,
+    },
+    {
+      title: "Chatbot",
+      url: "/chatbot",
+      icon: Bot,
+    },
+    {
+      title: "Achievements",
+      url: "/achievements",
+      icon: Award,
+    },
+    {
       title: "Documentation",
-      url: "#",
+      url: "/docs",
       icon: BookOpen,
      
     },
     {
       title: "About",
-      url: "#",
+      url: "/about",
       icon: Info,
      
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: Settings2,
      
     },
   ],
   navSecondary: [
     {
-      title: "Support",
+      title: "Support & Feedback",
       url: "/support",
       icon: LifeBuoy,
     },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
+
   ],
   projects: [
     {
@@ -78,16 +96,7 @@ const data = {
       url: "/items",
       icon: Frame,
     },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
+    
   ],
 }
 

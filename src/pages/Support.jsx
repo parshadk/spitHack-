@@ -116,7 +116,7 @@ function Support() {
                     <h2 className="text-3xl font-bold mb-4">Need Help?</h2>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Submit a Complaint</CardTitle>
+                            <CardTitle>Submit feedback</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleComplaintSubmit} className="space-y-4">
@@ -141,7 +141,7 @@ function Support() {
                                         rows={4}
                                     />
                                 </div>
-                                <Button type="submit">Submit Complaint</Button>
+                                <Button type="submit">Submit feedback</Button>
                             </form>
                         </CardContent>
                     </Card>
