@@ -39,25 +39,25 @@ const data = {
       title: "Dashboard",
       url: "#",
       icon: SquareTerminal
-     
+
     },
     {
       title: "Documentation",
       url: "#",
       icon: BookOpen,
-     
+
     },
     {
       title: "About",
-      url: "#",
+      url: "/help",
       icon: Info,
-     
+
     },
     {
       title: "Settings",
       url: "#",
       icon: Settings2,
-     
+
     },
   ],
   navSecondary: [
