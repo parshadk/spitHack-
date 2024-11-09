@@ -10,13 +10,14 @@ import {
 import HomePage from './pages/HomePage';
 import Itempage from './pages/Itempage';
 import Support from './pages/Support';
+import Dashboard from './pages/Dashboard';
 import Help from './pages/Help';
 
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
   { path: '/items', element: <Itempage /> },
-  { path: '/support', element: <Support /> },
   { path: '/help', element: <Help /> },
+  { path: '/dashboard', element: <Dashboard /> },
 ]);
 function App() {
   return (
