@@ -32,7 +32,7 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
+    name: "addylovesdiddy",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
