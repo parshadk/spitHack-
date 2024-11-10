@@ -65,8 +65,7 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent>
                   Log food items with details like name, quantity, expiry
-                  date, and storage location. Includes barcode scanning for
-                  easy entry.
+                  date, and storage location. 
                 </CardContent>
               </Card>
             </div>

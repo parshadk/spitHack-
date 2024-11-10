@@ -68,7 +68,7 @@ export default function Dashboard() {
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold">Food Inventory Analytics</h1>
+      <h1 className="text-3xl font-bold">Personal Food Inventory Analytics</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Inventory Trends */}
