@@ -31,9 +31,8 @@ import { useAuth } from '@/UserContext';
 export function NavUser() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();  
-  const { user } = useAuth();  // Destructure user from useAuth context
+  const { user } = useAuth();  
 
-  // Handle logout functionality
   const handleLogout = async () => {
     try {
       await logOut();  // Call the logOut function to log out the user
@@ -90,7 +89,7 @@ export function NavUser() {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <BadgeCheck />
+                    <BadgeCheck onClick={navigate("/profile")}/>
                     Account
                   </DropdownMenuItem>
                   <DropdownMenuItem>

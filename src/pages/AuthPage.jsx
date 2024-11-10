@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { signUp, signIn, logOut } from "@/authService.js";
 import {doc,setDoc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
