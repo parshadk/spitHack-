@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getFunctions } from "firebase/functions";
-import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore"; // Firestore import, if needed elsewhere
+import { getDatabase } from "firebase/database"; // Realtime Database import
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -12,9 +13,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const functions = getFunctions(app);
-export const database = getDatabase(app);
+// Initialize Firebase services
+export const auth = getAuth(app); // Authentication
+export const functions = getFunctions(app); // Firebase Functions (if needed)
+export const db = getFirestore(app); // Firestore (if needed)
+export const database = getDatabase(app); // Realtime Database
