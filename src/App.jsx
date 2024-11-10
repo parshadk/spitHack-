@@ -19,6 +19,7 @@ import Documentation from './pages/Documentation';
 import About from './pages/About';
 import Account from './pages/Account';
 import Help from './pages/Help';
+import AuthPage from './pages/AuthPage';
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
   { path: '/items', element: <ItemPage /> },
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
   { path: '/docs', element: <Documentation /> },
   { path: '/about', element: <About /> },
   { path: '/account', element: <Account /> },
+  { path: '/auth', element: <AuthPage /> },
 ]);
 function App() {
   return (
