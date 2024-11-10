@@ -13,12 +13,12 @@ import Documentation from './pages/Documentation';
 import About from './pages/About';
 import Account from './pages/Account';
 import Help from './pages/Help';
-import NotFound from './pages/NotFound'; 
+import NotFound from './pages/NotFound';
 import AuthPage from './pages/AuthPage';
 
 const router = createBrowserRouter([
-  { path: '/', element: <HomePage /> }, 
-  { path: '/auth', element: <AuthPage /> }, 
+  { path: '/', element: <HomePage /> },
+  { path: '/auth', element: <AuthPage /> },
   {
     path: '/',
     element: <ProtectedRoute />,
