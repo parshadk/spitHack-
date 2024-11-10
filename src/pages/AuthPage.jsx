@@ -64,6 +64,7 @@ const AuthPage = () => {
       const user = result.user;
       await setDoc(doc(db,"users", user.uid), {
         email: user.email,
+        userId : user.uid,
         isNgo: false,
         createdAt: new Date()
       });
