@@ -46,6 +46,7 @@ import {
 import { database } from "../firebaseConfig.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function ItemPage() {
   const [foodItems, setFoodItems] = useState([]);
   const [newItem, setNewItem] = useState({
@@ -53,9 +54,12 @@ function ItemPage() {
     quantity: "",
     expiryDate: "",
   });
+  
+  // Assuming you have a user authentication system in place, get the current user's ID
+  const userId = "userId"; // Replace with dynamic user ID from Firebase Authentication (e.g., `auth.currentUser.uid`)
 
   useEffect(() => {
-    const foodItemsRef = ref(database, "foodItems");
+    const foodItemsRef = ref(database, `foodItems/${userId}`);
     onValue(foodItemsRef, (snapshot) => {
       const items = [];
       snapshot.forEach((childSnapshot) => {
@@ -63,7 +67,7 @@ function ItemPage() {
       });
       setFoodItems(items);
     });
-  }, []);
+  }, [userId]); // Use `userId` as a dependency to update the data when the user changes
 
   const getExpiryStatus = (expiryDate) => {
     if (!expiryDate) return "unknown";
@@ -74,7 +78,7 @@ function ItemPage() {
   };
 
   const toggleAlert = (itemId, currentStatus) => {
-    const itemRef = ref(database, `foodItems/${itemId}`);
+    const itemRef = ref(database, `foodItems/${userId}/${itemId}`);
     update(itemRef, { alertEnabled: !currentStatus });
   };
 
@@ -86,11 +90,11 @@ function ItemPage() {
       return;
     }
 
-    const foodItemsRef = ref(database, "foodItems");
+    const foodItemsRef = ref(database, `foodItems/${userId}`);
     const newFoodItemRef = push(foodItemsRef);
     const foodItem = { ...newItem };
-    foodItem.expiryDate = format(newItem.expiryDate, "yyyy/MM/dd")
-    foodItem.quantity = parseInt(newItem.quantity)
+    foodItem.expiryDate = format(newItem.expiryDate, "yyyy/MM/dd");
+    foodItem.quantity = parseInt(newItem.quantity);
 
     set(newFoodItemRef, foodItem)
       .then(() => {
@@ -105,9 +109,10 @@ function ItemPage() {
         toast.error("Failed to add food item: " + error.message);
       });
   };
+
   // Handle deleting an item from Firebase
   const handleDeleteItem = (itemId) => {
-    const itemRef = ref(database, `foodItems/${itemId}`);
+    const itemRef = ref(database, `foodItems/${userId}/${itemId}`);
     set(itemRef, null);
   };
 
