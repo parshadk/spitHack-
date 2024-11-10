@@ -12,15 +12,15 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signUp, signIn, logOut } from "@/authService.js";
-import {doc,setDoc} from "firebase/firestore";
+import { signUp, signIn } from "@/authService.js";
+import { ref, set } from "firebase/database";  // Correct import for Realtime Database
 import { useNavigate } from "react-router-dom";
-import { set } from "date-fns";
-import { db } from "@/firebaseConfig";
+import { database } from "@/firebaseConfig";  // Use the correct reference for Realtime Database
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isNgo, setIsNgo] = useState(false); // Track if the user is an NGO
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const AuthPage = () => {
       const result = await signIn(email, password);
       console.log("Logged in:", result);
       toast.success("Logged in successfully");
-      setTimeout(() => navigate("/"), 1000);
+      setTimeout(() => navigate(isNgo ? "/" : "/"), 1000);
     } catch (err) {
       console.log("Error:", err);
       toast.error("Invalid email or password");
@@ -63,14 +63,18 @@ const AuthPage = () => {
     try {
       const result = await signUp(email, password);
       const user = result.user;
-      await setDoc(doc(db,"users", user.uid), {
-        email: user.email,
-        userId : user.uid,
-        isNgo: false,
-        createdAt: new Date()
-      });
-      toast.success("Account created successfully");
 
+      // Correct Realtime Database usage: Use the `database` reference here
+      const userRef = ref(database, `${isNgo ? "ngos" : "users"}/${user.uid}`);
+      await set(userRef, {
+        email: user.email,
+        userId: user.uid,
+        isNgo: isNgo, // Save if user is an NGO or not
+        createdAt: new Date().toISOString(),  // You can store a date string
+      });
+
+      toast.success("Account created successfully");
+      navigate(isNgo ? "/" : "/");
     } catch (err) {
       console.log("Sign up error:", err);
       toast.error("Failed to create account");
@@ -89,9 +93,7 @@ const AuthPage = () => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Welcome</CardTitle>
-          <CardDescription>
-            Sign in to your account or create a new one
-          </CardDescription>
+          <CardDescription>Sign in to your account or create a new one</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
@@ -147,9 +149,7 @@ const AuthPage = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-confirm-password">
-                    Confirm Password
-                  </Label>
+                  <Label htmlFor="signup-confirm-password">Confirm Password</Label>
                   <Input
                     id="signup-confirm-password"
                     name="confirmPassword"
@@ -157,6 +157,34 @@ const AuthPage = () => {
                     required
                   />
                 </div>
+
+                {/* NGO Toggle with Switch */}
+                <div className="flex items-center space-x-4 mt-4">
+                  <Label htmlFor="isNgo" className="text-sm">
+                    Sign up as an NGO
+                  </Label>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="isNgo"
+                      checked={isNgo}
+                      onChange={(e) => setIsNgo(e.target.checked)}
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-11 h-6 flex items-center justify-between bg-gray-200 rounded-full p-1 transition-all duration-300 ease-in-out ${
+                        isNgo ? "bg-green-500" : "bg-gray-300"
+                      }`}
+                    >
+                      <span
+                        className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-all duration-300 ease-in-out ${
+                          isNgo ? "translate-x-5" : "translate-x-1"
+                        }`}
+                      ></span>
+                    </span>
+                  </label>
+                </div>
+
                 <Button className="w-full" type="submit" disabled={isLoading}>
                   {isLoading ? "Please wait..." : "Sign Up"}
                 </Button>

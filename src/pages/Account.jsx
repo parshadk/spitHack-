@@ -18,6 +18,7 @@ import { Check, Edit3 } from "lucide-react"; // Importing icons for save and edi
 import { useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
+import { toast } from "react-toastify";
 
 function Account() {
   const { user } = useAuth(); // Access user data from context
@@ -45,6 +46,7 @@ function Account() {
           contact: profileData.contact,
           address: profileData.address,
         });
+        toast.success("Profile updated successfully");
         setIsEditing(false); // Turn off editing mode after saving
       }
     } catch (error) {
@@ -56,28 +58,27 @@ function Account() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Account
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Profile</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
+        <header className="flex h-16 shrink-0 items-center gap-2 px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href="#">
+                  Account
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Profile</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+
+        <div className="flex flex-col gap-8 p-6">
           {/* Profile information display */}
-          <div className="bg-white p-6 rounded-md shadow-lg flex items-center gap-6">
+          <div className="bg-white p-6 rounded-lg shadow-md flex items-center gap-6">
             <div className="flex-shrink-0">
               <img
                 src={user?.avatar || "/placeholder-avatar.png"}
@@ -86,52 +87,52 @@ function Account() {
               />
             </div>
             <div className="flex-1 space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold">Name:</span>
+              <div className="flex items-center gap-4">
+                <span className="text-lg font-semibold text-gray-700">Name:</span>
                 {isEditing ? (
                   <input
                     type="text"
                     name="name"
                     value={profileData.name}
                     onChange={handleChange}
-                    className="border rounded p-1"
+                    className="border rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   />
                 ) : (
-                  <span>{profileData.name || "N/A"}</span>
+                  <span className="text-gray-600">{profileData.name || "N/A"}</span>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold">Contact:</span>
+              <div className="flex items-center gap-4">
+                <span className="text-lg font-semibold text-gray-700">Contact:</span>
                 {isEditing ? (
                   <input
                     type="text"
                     name="contact"
                     value={profileData.contact}
                     onChange={handleChange}
-                    className="border rounded p-1"
+                    className="border rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   />
                 ) : (
-                  <span>{profileData.contact || "N/A"}</span>
+                  <span className="text-gray-600">{profileData.contact || "N/A"}</span>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold">Address:</span>
+              <div className="flex items-center gap-4">
+                <span className="text-lg font-semibold text-gray-700">Address:</span>
                 {isEditing ? (
                   <input
                     type="text"
                     name="address"
                     value={profileData.address}
                     onChange={handleChange}
-                    className="border rounded p-1"
+                    className="border rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   />
                 ) : (
-                  <span>{profileData.address || "N/A"}</span>
+                  <span className="text-gray-600">{profileData.address || "N/A"}</span>
                 )}
               </div>
             </div>
             <button
               onClick={isEditing ? handleSave : toggleEditing}
-              className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+              className="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none transition"
               aria-label={isEditing ? "Save Changes" : "Edit Profile"}
             >
               {isEditing ? <Check className="w-5 h-5" /> : <Edit3 className="w-5 h-5" />}
