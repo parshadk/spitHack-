@@ -11,7 +11,6 @@ import HomePage from './pages/HomePage';
 import  ItemPage from './pages/Itempage';
 import Dashboard from './pages/Dashboard';
 import Achievements from './pages/Achievements';
-import Settings from './pages/Settings';
 import Ngodonations from './pages/Ngodonations';
 import Crowdfunding from './pages/Crowdfunding';
 import Chatbot from './pages/Chatbot';
@@ -26,7 +25,6 @@ const router = createBrowserRouter([
   { path: '/help', element: <Help /> },
   { path: '/dashboard', element: <Dashboard /> },
   { path: '/achievements', element: <Achievements /> },
-  { path: '/settings', element: <Settings /> },
   { path: '/donations', element: <Ngodonations /> },
   { path: '/crowdfunding', element: <Crowdfunding /> },
   { path: '/chatbot', element: <Chatbot /> },

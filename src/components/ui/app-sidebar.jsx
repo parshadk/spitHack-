@@ -75,12 +75,6 @@ const data = {
       icon: Info,
 
     },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings2,
-
-    },
   ],
   navSecondary: [
     {
