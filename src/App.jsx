@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
-import  ItemPage from './pages/Itempage';
+import ItemPage from './pages/Itempage';
 import Dashboard from './pages/Dashboard';
 import Achievements from './pages/Achievements';
 import Ngodonations from './pages/Ngodonations';
@@ -18,6 +18,7 @@ import Documentation from './pages/Documentation';
 import About from './pages/About';
 import Account from './pages/Account';
 import Help from './pages/Help';
+import Profile from './pages/Profile';
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
   { path: '/items', element: <ItemPage /> },
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   { path: '/docs', element: <Documentation /> },
   { path: '/about', element: <About /> },
   { path: '/account', element: <Account /> },
+  { path: '/profile', element: <Profile /> },
 ]);
 function App() {
   return (
