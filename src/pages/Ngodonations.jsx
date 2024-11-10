@@ -14,7 +14,8 @@ import {
   } from "@/components/ui/sidebar"
   import { AppSidebar } from "@/components/ui/app-sidebar"
  
-  import React, { useState } from 'react'
+  import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts'
+  import React, { useState,useEffect } from 'react'
   import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
   import { Button } from "@/components/ui/button"
   import { Input } from "@/components/ui/input"
@@ -28,10 +29,10 @@ import {
   import { ScrollArea } from "@/components/ui/scroll-area"
   import { Badge } from "@/components/ui/badge"
   import { Camera, Search } from 'lucide-react'
-  
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8']
   
 function Ngodonations() {
-  const [userType, setUserType] = useState('donor') // 'donor' or 'ngo'
+  const [userType, setUserType] = useState('donor')
   const [donations, setDonations] = useState([])
   const [requests, setRequests] = useState([])
   const [showDonationForm, setShowDonationForm] = useState(false)
@@ -53,6 +54,57 @@ function Ngodonations() {
     quantity: '',
     specialRequirements: ''
   })
+
+  // Simulated data for charts
+  const donationsByCategory = [
+    { name: 'Fruits & Vegetables', value: 400 },
+    { name: 'Grains', value: 300 },
+    { name: 'Dairy', value: 200 },
+    { name: 'Protein', value: 278 },
+    { name: 'Other', value: 189 }
+  ]
+
+  const foodWasteData = [
+    { name: 'Expired', value: 15 },
+    { name: 'Damaged', value: 10 },
+    { name: 'Unused', value: 5 },
+    { name: 'Distributed', value: 70 }
+  ]
+
+  const monthlyDonationData = [
+    { month: 'Jan', donations: 65 },
+    { month: 'Feb', donations: 59 },
+    { month: 'Mar', donations: 80 },
+    { month: 'Apr', donations: 81 },
+    { month: 'May', donations: 56 },
+    { month: 'Jun', donations: 55 },
+    { month: 'Jul', donations: 40 }
+  ]
+
+  useEffect(() => {
+    // Simulated API calls
+    fetchDonations()
+    fetchRequests()
+  }, [])
+
+  const fetchDonations = () => {
+    // Simulated API call
+    const sampleDonations = [
+      { id: 1, foodItem: 'Apples', category: 'Fruits', quantity: '10 kg', expiryDate: '2023-08-15', status: 'Available' },
+      { id: 2, foodItem: 'Bread', category: 'Grains', quantity: '20 loaves', expiryDate: '2023-08-10', status: 'Picked Up' },
+      { id: 3, foodItem: 'Milk', category: 'Dairy', quantity: '15 liters', expiryDate: '2023-08-12', status: 'In Progress' }
+    ]
+    setDonations(sampleDonations)
+  }
+
+  const fetchRequests = () => {
+    // Simulated API call
+    const sampleRequests = [
+      { id: 1, foodType: 'Vegetables', quantity: '50 kg', specialRequirements: 'Fresh produce preferred', status: 'Pending' },
+      { id: 2, foodType: 'Canned Goods', quantity: '100 cans', specialRequirements: 'Non-perishable items', status: 'Fulfilled' }
+    ]
+    setRequests(sampleRequests)
+  }
 
   const handleDonationSubmit = (e) => {
     e.preventDefault()
@@ -106,7 +158,7 @@ function Ngodonations() {
     )
     setDonations(updatedDonations)
     setSelectedDonation(null)
-  } 
+  }
   return (
     <SidebarProvider>
     <AppSidebar />
@@ -120,7 +172,7 @@ function Ngodonations() {
             <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem className="hidden md:block">
                 <BreadcrumbLink href="#">
-                  Building Your Application
+                  Donations
                 </BreadcrumbLink>
               </BreadcrumbItem>
               
@@ -129,9 +181,7 @@ function Ngodonations() {
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-         
       <div className="container mx-auto p-6 max-w-7xl">
-      <h1 className="text-3xl font-bold mb-6">Food Donation Platform</h1>
       
       <div className="mb-6">
         <Select value={userType} onValueChange={setUserType}>
@@ -145,119 +195,204 @@ function Ngodonations() {
         </Select>
       </div>
 
-      {userType === 'donor' ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Donor Dashboard</CardTitle>
-            <CardDescription>Manage your food donations</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => setShowDonationForm(true)} className="mb-4">
-              Make a Donation
-            </Button>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Food Item</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Expiry Date</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {donations.map((donation) => (
-                  <TableRow key={donation.id}>
-                    <TableCell>{donation.foodItem}</TableCell>
-                    <TableCell>{donation.category}</TableCell>
-                    <TableCell>{donation.quantity}</TableCell>
-                    <TableCell>{donation.expiryDate}</TableCell>
-                    <TableCell>
-                      <Badge variant={donation.status === 'Available' ? 'secondary' : 'default'}>
-                        {donation.status}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>NGO Dashboard</CardTitle>
-            <CardDescription>Request and manage food donations</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="available">
-              <TabsList>
-                <TabsTrigger value="available">Available Donations</TabsTrigger>
-                <TabsTrigger value="requests">Your Requests</TabsTrigger>
-              </TabsList>
-              <TabsContent value="available">
-                <div className="mb-4">
-                  <Label htmlFor="search">Search Donations</Label>
-                  <div className="relative">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input id="search" placeholder="Search by item, category, or location" className="pl-8" />
-                  </div>
-                </div>
-                <ScrollArea className="h-[400px]">
-                  {donations.filter(d => d.status === 'Available').map((donation) => (
-                    <Card key={donation.id} className="mb-4">
-                      <CardHeader>
-                        <CardTitle>{donation.foodItem}</CardTitle>
-                        <CardDescription>{donation.category}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p><strong>Quantity:</strong> {donation.quantity}</p>
-                        <p><strong>Expiry Date:</strong> {donation.expiryDate}</p>
-                        <p><strong>Pickup Location:</strong> {donation.pickupLocation}</p>
-                        {donation.photo && (
-                          <img src={donation.photo} alt={donation.foodItem} className="mt-2 rounded-md w-full max-w-xs" />
-                        )}
-                      </CardContent>
-                      <CardFooter>
-                        <Button onClick={() => handlePickupRequest(donation)}>Request Pickup</Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </ScrollArea>
-              </TabsContent>
-              <TabsContent value="requests">
-                <Button onClick={() => setShowRequestForm(true)} className="mb-4">
-                  Make a Request
+      <Tabs defaultValue="dashboard">
+        <TabsList>
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="dashboard">
+          {userType === 'donor' ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Donor Dashboard</CardTitle>
+                <CardDescription>Manage your food donations</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={() => setShowDonationForm(true)} className="mb-4">
+                  Make a Donation
                 </Button>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Food Type</TableHead>
+                      <TableHead>Food Item</TableHead>
+                      <TableHead>Category</TableHead>
                       <TableHead>Quantity</TableHead>
-                      <TableHead>Special Requirements</TableHead>
+                      <TableHead>Expiry Date</TableHead>
                       <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {requests.map((request) => (
-                      <TableRow key={request.id}>
-                        <TableCell>{request.foodType}</TableCell>
-                        <TableCell>{request.quantity}</TableCell>
-                        <TableCell>{request.specialRequirements}</TableCell>
+                    {donations.map((donation) => (
+                      <TableRow key={donation.id}>
+                        <TableCell>{donation.foodItem}</TableCell>
+                        <TableCell>{donation.category}</TableCell>
+                        <TableCell>{donation.quantity}</TableCell>
+                        <TableCell>{donation.expiryDate}</TableCell>
                         <TableCell>
-                          <Badge variant={request.status === 'Pending' ? 'secondary' : 'default'}>
-                            {request.status}
+                          <Badge variant={donation.status === 'Available' ? 'secondary' : 'default'}>
+                            {donation.status}
                           </Badge>
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-      )}
+              </CardContent>
+            </Card>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle>NGO Dashboard</CardTitle>
+                <CardDescription>Request and manage food donations</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="available">
+                  <TabsList>
+                    <TabsTrigger value="available">Available Donations</TabsTrigger>
+                    <TabsTrigger value="requests">Your Requests</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="available">
+                    <div className="mb-4">
+                      <Label htmlFor="search">Search Donations</Label>
+                      <div className="relative">
+                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input id="search" placeholder="Search by item, category, or location" className="pl-8" />
+                      </div>
+                    </div>
+                    <ScrollArea className="h-[400px]">
+                      {donations.filter(d => d.status === 'Available').map((donation) => (
+                        <Card key={donation.id} className="mb-4">
+                          <CardHeader>
+                            <CardTitle>{donation.foodItem}</CardTitle>
+                            <CardDescription>{donation.category}</CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <p><strong>Quantity:</strong> {donation.quantity}</p>
+                            <p><strong>Expiry Date:</strong> {donation.expiryDate}</p>
+                            <p><strong>Pickup Location:</strong> {donation.pickupLocation}</p>
+                            {donation.photo && (
+                              <img src={donation.photo} alt={donation.foodItem} className="mt-2 rounded-md w-full max-w-xs" />
+                            )}
+                          </CardContent>
+                          <CardFooter>
+                            <Button onClick={() => handlePickupRequest(donation)}>Request Pickup</Button>
+                          </CardFooter>
+                        </Card>
+                      ))}
+                    </ScrollArea>
+                  </TabsContent>
+                  <TabsContent value="requests">
+                    <Button onClick={() => setShowRequestForm(true)} className="mb-4">
+                      Make a Request
+                    </Button>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Food Type</TableHead>
+                          <TableHead>Quantity</TableHead>
+                          <TableHead>Special Requirements</TableHead>
+                          <TableHead>Status</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {requests.map((request) => (
+                          <TableRow key={request.id}>
+                            <TableCell>{request.foodType}</TableCell>
+                            <TableCell>{request.quantity}</TableCell>
+                            <TableCell>{request.specialRequirements}</TableCell>
+                            <TableCell>
+                              <Badge variant={request.status === 'Pending' ? 'secondary' : 'default'}>
+                                {request.status}
+                              </Badge>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+        
+        <TabsContent value="analytics">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Donations by Category</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={donationsByCategory}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {donationsByCategory.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle>Food Waste Analysis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={foodWasteData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {foodWasteData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+            
+            <Card className="md:col-span-2">
+              <CardHeader>
+                <CardTitle>Monthly Donation Trends</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={monthlyDonationData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="donations" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       <Dialog open={showDonationForm} onOpenChange={setShowDonationForm}>
         <DialogContent>
@@ -406,7 +541,7 @@ function Ngodonations() {
         </DialogContent>
       </Dialog>
     </div>
-        
+
       </div>
     </SidebarInset>
   </SidebarProvider>
