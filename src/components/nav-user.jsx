@@ -31,13 +31,13 @@ import { useAuth } from '@/UserContext';
 export function NavUser() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();  
-  const { user } = useAuth();  // Destructure user from useAuth context
+  const { user } = useAuth();  
 
   // Handle logout functionality
   const handleLogout = async () => {
     try {
-      await logOut();  // Call the logOut function to log out the user
-      navigate('/');  // Redirect to login page after logout
+      await logOut();  // Log out the user
+      navigate('/');  // Redirect to the homepage after logout
     } catch (error) {
       console.error("Logout failed", error);  // Log any errors during logout
     }
@@ -89,12 +89,12 @@ export function NavUser() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <BadgeCheck />
+                  <DropdownMenuItem onClick={() => navigate("/account")}>
+                    <BadgeCheck className="mr-2" />
                     Account
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Bell />
+                    <Bell className="mr-2" />
                     Notifications
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
