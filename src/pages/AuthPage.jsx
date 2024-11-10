@@ -12,7 +12,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToastContainer, toast } from "react-toastify";
 import { signUp, signIn, logOut } from "@/authService.js";
+import {doc,setDoc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { set } from "date-fns";
+import { db } from "@/firebaseConfig";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -58,7 +61,13 @@ const AuthPage = () => {
 
     try {
       const result = await signUp(email, password);
-      console.log("Signed up:", result);
+      const user = result.user;
+      await setDoc(doc(db,"users", user.uid), {
+        email: user.email,
+        userId : user.uid,
+        isNgo: false,
+        createdAt: new Date()
+      });
       toast.success("Account created successfully");
 
     } catch (err) {
